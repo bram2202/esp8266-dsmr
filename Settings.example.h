@@ -25,5 +25,5 @@
 //default MQTT topic
 #define MQTT_TOPIC "dsmr"
 
-//for debuggin, print info on serial
+//for debugging, print info on serial
 #define DEBUGE_MODE true
