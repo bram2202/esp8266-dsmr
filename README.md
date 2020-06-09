@@ -5,6 +5,8 @@ All units (except power tariff and version) are rounded to 3 decimals.
 
 The code should work on DSRM v2.2 and higher, only tested on V4.2.
 
+![esp8266-dsmr](https://github.com/bram2202/esp8266-dsmr/blob/master/docs/esp8266-dsmr.jpg "esp8266-dsmr")
+
 ## Requirements 
 * ESP8266 (Wemos/LOLIN D1 mini)
 * Basic soldering and wiring skills
