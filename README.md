@@ -3,6 +3,8 @@ A ESP8266 based DSMR reader, posting onto MQTT, powered directly from the meter 
 
 All units (except power tariff and version) are rounded to 3 decimals.
 
+The code should work on DSRM v2.2 and higher, only tested on V4.2.
+
 ## Requirements 
 * ESP8266 (Wemos/LOLIN D1 mini)
 * Basic soldering and wiring skills
@@ -57,3 +59,17 @@ The board is powered directly from the meters power supply.
 | 1k resistor | 1 |
 | BC547 | 1 | 
 | 470uf cap. | 1 | 
+
+### RJ11 connection
+
+Connecting to the DSMR witn a RJ11 in Port 1 (P1), found on most smart meters.
+
+
+| DSRM RJ11 | Description | J1 pin |
+|:---|:---|:---|
+| 1 | +5v | 1 (5v) |
+| 2 | Request | 2 (5v) |
+| 3 | Data GND| 3 (GND) |
+| 4 | N.C. | N.C. |
+| 5 | Data | 5 (Data)|
+| 6 | Power GND | 6 (GND) |
