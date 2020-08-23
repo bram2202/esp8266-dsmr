@@ -22,8 +22,7 @@ bool MQTTPublisher::reconnect()
   
   if (debugMode)
   {
-    Serial.println("MQTT) Attempt connection to server: ");
-    Serial.print(MQTT_HOST_NAME);
+    Serial.println("MQTT) Attempt connection to server: " + String(MQTT_HOST_NAME));
   }
 
   // Create a random client ID

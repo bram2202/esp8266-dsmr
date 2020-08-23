@@ -49,8 +49,10 @@ Copy `Settings.example.h` to `Settings.h` and fill in the correct data.
 ## Circuit
 view [scheme.pdf](scheme.pdf).
 
-Using a level shifter inverter to get the serial output from the meter into the ESP.
-The board is powered directly from the meters power supply.
+Using a level shifter inverter to get the serial output from the meter into the ESP.<br>
+The board is powered directly from the meters power supply.<br>
+
+**Flash the firmware before attaching the circuit,** see "know issue"!
 
 ### Parts
 | Type | Amount |
@@ -75,3 +77,10 @@ Connecting to the DSMR witn a RJ11 in Port 1 (P1), found on most smart meters.
 | 4 | N.C. | N.C. |
 | 5 | Data | 5 (Data)|
 | 6 | Power GND | 6 (GND) |
+
+
+## Known issues
+- If the level shifter inverter is connected, it's impossible to flash the firmware.<br>
+Pin RX is used, disconnect the pin to flash new firmware.
+- Some DSMR cannot deliver enough power to run the Wemos stably.<br> 
+Connect a 5V usb supply to fix this.
