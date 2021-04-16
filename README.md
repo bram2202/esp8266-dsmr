@@ -86,3 +86,40 @@ Connecting to the DSMR witn a RJ11 in Port 1 (P1), found on most smart meters.
 Pin RX is used, disconnect the pin to flash new firmware.
 - Some DSMR cannot deliver enough power to run the Wemos stably.<br> 
 Connect a 5V usb supply to fix this.
+
+## Capture MQTT values with Telegraf into InfluxDB
+
+Since MQTT only contains the last value of a metric, when the consumer is temporary offline, all values in between are lost.
+This can be solved by having Telegraf also monitoring your MQTT topics and store the values into an InfluxDB from which values can easily be displayed in graphs using Grafana.
+
+In `telegram.conf` the MQTT consumer input needs to be enabled.
+Since the topic values created by ESP8266-DSMR are both Strings, Integers and Float, the data_format `value` is used with data_type `string` which supports all types.
+All data seems to be put in Influx properly and Grafana can display graphs using those values.
+
+Data is stored in measurement 'mqtt_consumer' and have the 'topic' as tag.
+Example query:
+```
+SELECT "value" FROM "mqtt_consumer" WHERE ("topic" = 'esp-dsmr/fdc4f6/power/power_production') AND $timeFilter
+```
+
+Telegraf config:
+```
+[[inputs.mqtt_consumer]]
+  servers = ["tcp://<ip>:1883"]
+  topics = [
+     "esp-dsmr/fdc4f6/#"
+  ]
+  client_id = "telegraf"
+#
+#   ## Username and password to connect MQTT server.
+#   # username = "telegraf"
+#   # password = "metricsmetricsmetricsmetrics"
+#   ## Data format to consume.
+#   ## Each data format has its own unique set of configuration options, read
+#   ## more about them here:
+#   ## https://github.com/influxdata/telegraf/blob/master/docs/DATA_FORMATS_INPUT.md
+  data_format = "value"
+  data_type = "string"
+```
+
+Unfortunately with the used PubSub client, it is not possible to set the QoS and therefore it is not possible to use the persistent session feature, which would cache all values on the broker when Telegraf would be temporary offline.
