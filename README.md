@@ -1,6 +1,6 @@
 # esp8266-dsmr
 
-> 16-04-2020: Based on Bram2202's [esp8266-dsmr](https://github.com/bram2202/esp8266-dsmr).
+> 16-04-2021: Based on Bram2202's [esp8266-dsmr](https://github.com/bram2202/esp8266-dsmr).
 > - Extended number of supported properties to include all property values send by a [Kaifa 304](https://www.liander.nl/sites/default/files/Meters-Handleidingen-elektriciteit-Kaifa-uitgebreid.pdf) smart meter. Now in a simple structure and easy to extend.
 > - Changed MQTT structure to `esp-dsmr/<device-id>/<property-name>`. The property name can include additional `/`. E.g. for `1-0:31.7.0` (L1 instant usage), the MQTT topic is `esp-dsmr/<device-id>/power/phase_1/instant_usage`.
 > 
