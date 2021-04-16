@@ -16,7 +16,7 @@ The code should work on DSRM v2.2 and higher, only tested on V4.2.
 ![esp8266-dsmr](https://github.com/bram2202/esp8266-dsmr/blob/master/docs/esp8266-dsmr.jpg "esp8266-dsmr")
 
 ## Requirements 
-* ESP8266 (Wemos/LOLIN D1 mini)
+* ESP8266 (Wemos/LOLIN D1 mini/ESP01/NodeMCU)
 * Basic soldering and wiring skills
 * (For Wemos d1 mini) CH340G driver [[link]](https://wiki.wemos.cc/downloads)
 * Arduino IDE
@@ -25,17 +25,11 @@ The code should work on DSRM v2.2 and higher, only tested on V4.2.
 
 
 ## Supported messages
-| Name | unit | DSMR code | MQTT topic |
-|:----  |:-------|:------ |:------|
-| DSMR version | - | 0.2.8 | dsmr/power_consuption | 
-| power consuption | kW | 1.7.0 | dsmr/power_consuption | 
-| power prduction | kW | 2.7.0| dsmr/power_production | 
-| total consuption low | kWh | 1.8.1 | dsmr/total_consuption_low |
-| total consuption high | kWh | 1.8.2 | dsmr/total_consuption_high |
-| total production low | kWh | 2.8.1 | dsmr/total_production_low |
-| total production high | kWh | 2.8.2 | dsmr/total_production_high |
-| total gas | m3 | 24.2.1 | dsmr/total_gas |
-| power tariff | 1 = low, 2 = high | 96.14.0 | dsmr/power_tariff |
+See [code](https://github.com/diversit/esp8266-dsmr/blob/master/esp8266-dsmr.ino#L28)
+
+## Library dependencies
+- [PubSubClient](https://pubsubclient.knolleary.net) - MQTT client
+- [WifiManager](https://github.com/tzapu/WiFiManager) - Wifi client
 
 ## Settings
 Copy `Settings.example.h` to `Settings.h` and fill in the correct data.
