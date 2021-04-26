@@ -26,4 +26,7 @@
 #define MQTT_TOPIC "dsmr"
 
 //for debugging, print info on serial
-#define DEBUGE_MODE true
+#define DEBUG 1
+#define INFO  2
+#define WARN  3
+#define LOG_LEVEL DEBUG
