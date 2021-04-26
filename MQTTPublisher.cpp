@@ -26,7 +26,7 @@ String MQTTPublisher::getTopic(String name)
 bool MQTTPublisher::reconnect()
 {
   lastConnectionAttempt = millis();
-  
+
   logger.debug("Attempt connection to server: " + String(MQTT_HOST_NAME));
 
   // Attempt to connect
@@ -52,13 +52,14 @@ bool MQTTPublisher::reconnect()
     client.publish(getTopic("status").c_str(), "online");
 
     return true;
-  } else {
+  }
+  else
+  {
     logger.warn("failed, rc=" + client.state());
   }
 
   return false;
 }
-
 
 void MQTTPublisher::start()
 {
@@ -85,9 +86,11 @@ void MQTTPublisher::handle()
   if (!isStarted)
     return;
 
-  if (!client.connected() && millis() - lastConnectionAttempt > RECONNECT_TIMEOUT) {
+  if (!client.connected() && millis() - lastConnectionAttempt > RECONNECT_TIMEOUT)
+  {
     hasMQTT = false;
-    if (!reconnect()) return;
+    if (!reconnect())
+      return;
   }
 }
 
@@ -95,7 +98,7 @@ bool MQTTPublisher::publishOnMQTT(String topicSuffix, String msg)
 {
   String topic = getTopic(topicSuffix);
   logger.debug("Publish to '" + topic + "':" + msg);
-  auto retVal =  client.publish(topic.c_str(), msg.c_str());
+  auto retVal = client.publish(topic.c_str(), msg.c_str());
   yield();
   return retVal;
 }
