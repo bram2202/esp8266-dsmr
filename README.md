@@ -1,12 +1,5 @@
 # esp8266-dsmr
 
-> 16-04-2021: Based on Bram2202's [esp8266-dsmr](https://github.com/bram2202/esp8266-dsmr).
-> - Extended number of supported properties to include all property values send by a [Kaifa 304](https://www.liander.nl/sites/default/files/Meters-Handleidingen-elektriciteit-Kaifa-uitgebreid.pdf) smart meter. Now in a simple structure and easy to extend.
-> - Changed MQTT structure to `esp-dsmr/<device-id>/<property-name>`. The property name can include additional `/`. E.g. for `1-0:31.7.0` (L1 instant usage), the MQTT topic is `esp-dsmr/<device-id>/power/phase_1/instant_usage`.
-> 
-> See [code](https://github.com/diversit/esp8266-dsmr/blob/master/esp8266-dsmr.ino#L28) for all supported properties.
-
-
 A ESP8266 based DSMR reader, posting onto MQTT, powered directly from the meter itself, no external power supply needed..
 
 All units (except power tariff and version) are rounded to 3 decimals.
@@ -21,15 +14,58 @@ The code should work on DSRM v2.2 and higher, only tested on V4.2.
 * (For Wemos d1 mini) CH340G driver [[link]](https://wiki.wemos.cc/downloads)
 * Arduino IDE
 * Hardware package for arduino [[LINK]](https://github.com/esp8266/Arduino)
-* MQTT lib. for Arduino [[LINK]](https://pubsubclient.knolleary.net/)
-
-
-## Supported messages
-See [code](https://github.com/diversit/esp8266-dsmr/blob/master/esp8266-dsmr.ino#L28)
 
 ## Library dependencies
 - [PubSubClient](https://pubsubclient.knolleary.net) - MQTT client
-- [WifiManager](https://github.com/tzapu/WiFiManager) - Wifi client
+- [WifiManager](https://github.com/esp8266/Arduino) - Wifi client
+
+## Supported messages
+
+### Info
+| Name | unit | DSMR code | MQTT topic |
+|:----  |:-------|:------ |:------|
+| DSMR version | - | 1-3:0.2.8 | <MQTT_TOPIC>/version | 
+
+### Power
+| Name | unit | DSMR code | MQTT topic |
+|:----  |:-------|:------ |:------|
+| current power consumption | kW | 1-0:1.7.0 | <MQTT_TOPIC>/power/consumption | 
+| current power production | kW | 1-0:2.7.0| <MQTT_TOPIC>/power/production | 
+| total consumption low | kWh | 1-0:1.8.1 | <MQTT_TOPIC>/power/total_consumption_low |
+| total consumption high | kWh | 1-0:1.8.2 | <MQTT_TOPIC>/power/total_consumption_high |
+| total production low | kWh | 1-0:2.8.1 | <MQTT_TOPIC>/power/total_production_low |
+| total production high | kWh | 1-0:2.8.2 | <MQTT_TOPIC>/power/total_production_high |
+| power tariff | 1 = low, 2 = high | 0-0:96.14.0 | <MQTT_TOPIC>/power/power_tariff |
+| timestamp| - | 0-0:1.0.0 | <MQTT_TOPIC/>/power/timestamp |
+| device id | - | 0-0:96.1.1 | <MQTT_TOPIC/>/power/device |
+| short power outages | - | 0-0:96.7.21 |<MQTT_TOPIC/>/power/short_power_outages |
+| long power outages | - | 0-0:96.7.9 |<MQTT_TOPIC/>/power/long_power_outages |
+| instant current phase 1 | A | 1-0:31.7.0 |<MQTT_TOPIC/>/power/phase_1/current |
+| instant current phase 2 | A | 1-0:51.7.0 |<MQTT_TOPIC/>/power/phase_2/current |
+| instant current phase 3 | A | 1-0:71.7.0 |<MQTT_TOPIC/>/power/phase_3/current |
+| instant usage phase 1 | kW | 1-0:21.7.0 |<MQTT_TOPIC/>/power/phase_1/usage |
+| instant usage phase 2 | kW | 1-0:41.7.0 |<MQTT_TOPIC/>/power/phase_2/usage |
+| instant usage phase 3 | kW | 1-0:61.7.0 |<MQTT_TOPIC/>/power/phase_3/usage |
+| instant delivery phase 1 | Kw | 1-0:22.7.0 |<MQTT_TOPIC/>/power/phase_1/delivery |
+| instant delivery phase 2 | Kw | 1-0:42.7.0 |<MQTT_TOPIC/>/power/phase_2/delivery |
+| instant delivery phase 3 | Kw | 1-0:62.7.0 |<MQTT_TOPIC/>/power/phase_3/delivery |
+| short drops phase 1 | - | 1-0:32.32.0 | <MQTT_TOPIC/>/power/phase_1/drops |
+| short drops phase 2 | - | 1-0:52.32.0 | <MQTT_TOPIC/>/power/phase_2/drops |
+| short drops phase 3 | - | 1-0:72.32.0 | <MQTT_TOPIC/>/power/phase_3/drops |
+| short peaks phase 1 | - | 1-0:32.36.0 | <MQTT_TOPIC/>/power/phase_1/peaks |
+| short peaks phase 2 | - | 1-0:52.36.0 | <MQTT_TOPIC/>/power/phase_2/peaks |
+| short peaks phase 3 | - | 1-0:72.36.0 | <MQTT_TOPIC/>/power/phase_3/peaks |
+
+
+### Gas
+| Name | unit | DSMR code | MQTT topic |
+|:----  |:-------|:------ |:------|
+| total gas | m3 | 0-1:24.2.1 | <MQTT_TOPIC>/gas/total |
+| timestamp| - | 0-1:24.2.1| <MQTT_TOPIC/>/gas/timestamp |
+| device id | - | 0-1:96.1.0 | <MQTT_TOPIC/>/gas/device |
+
+
+
 
 ## Settings
 Copy `Settings.example.h` to `Settings.h` and fill in the correct data.
@@ -86,40 +122,3 @@ Connecting to the DSMR witn a RJ11 in Port 1 (P1), found on most smart meters.
 Pin RX is used, disconnect the pin to flash new firmware.
 - Some DSMR cannot deliver enough power to run the Wemos stably.<br> 
 Connect a 5V usb supply to fix this.
-
-## Capture MQTT values with Telegraf into InfluxDB
-
-Since MQTT only contains the last value of a metric, when the consumer is temporary offline, all values in between are lost.
-This can be solved by having Telegraf also monitoring your MQTT topics and store the values into an InfluxDB from which values can easily be displayed in graphs using Grafana.
-
-In `telegram.conf` the MQTT consumer input needs to be enabled.
-Since the topic values created by ESP8266-DSMR are both Strings, Integers and Float, the data_format `value` is used with data_type `string` which supports all types.
-All data seems to be put in Influx properly and Grafana can display graphs using those values.
-
-Data is stored in measurement 'mqtt_consumer' and have the 'topic' as tag.
-Example query:
-```
-SELECT "value" FROM "mqtt_consumer" WHERE ("topic" = 'esp-dsmr/fdc4f6/power/power_production') AND $timeFilter
-```
-
-Telegraf config:
-```
-[[inputs.mqtt_consumer]]
-  servers = ["tcp://<ip>:1883"]
-  topics = [
-     "esp-dsmr/fdc4f6/#"
-  ]
-  client_id = "telegraf"
-#
-#   ## Username and password to connect MQTT server.
-#   # username = "telegraf"
-#   # password = "metricsmetricsmetricsmetrics"
-#   ## Data format to consume.
-#   ## Each data format has its own unique set of configuration options, read
-#   ## more about them here:
-#   ## https://github.com/influxdata/telegraf/blob/master/docs/DATA_FORMATS_INPUT.md
-  data_format = "value"
-  data_type = "string"
-```
-
-Unfortunately with the used PubSub client, it is not possible to set the QoS and therefore it is not possible to use the persistent session feature, which would cache all values on the broker when Telegraf would be temporary offline.
