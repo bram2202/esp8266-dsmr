@@ -11,6 +11,7 @@ The code should work on DSRM v2.2 and higher, only tested on V4.2.
 ## Requirements 
 * ESP8266 (Wemos/LOLIN D1 mini/ESP01/NodeMCU)
 * Basic soldering and wiring skills
+* Arduino core for ESP8266 WiFi chip [[link]](https://github.com/esp8266/Arduino)
 * (For Wemos d1 mini) CH340G driver [[link]](https://wiki.wemos.cc/downloads)
 * Arduino IDE
 * Hardware package for arduino [[LINK]](https://github.com/esp8266/Arduino)
