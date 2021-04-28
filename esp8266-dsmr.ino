@@ -3,6 +3,7 @@
 #include <ESP8266HTTPClient.h>
 #include <WiFiUdp.h>
 #include "MQTTPublisher.h"
+#include <ArduinoOTA.h>
 #include "WifiConnector.h"
 #include "ESP8266mDNS.h"
 #include "Settings.h"
@@ -81,12 +82,18 @@ void setup()
   // Setup MQTT
   mqttPublisher = MQTTPublisher();
   mqttPublisher.start();
+
+  // Setup OTA
+  ArduinoOTA.setHostname(WIFI_HOSTNAME);
+  ArduinoOTA.begin();
 }
 
 void loop()
 {
 
   wifiConnector.handle();
+  yield();
+  ArduinoOTA.handle();
   yield();
   mqttPublisher.handle();
   yield();

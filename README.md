@@ -9,16 +9,14 @@ The code should work on DSRM v2.2 and higher, only tested on V4.2.
 ![esp8266-dsmr](https://github.com/bram2202/esp8266-dsmr/blob/master/docs/esp8266-dsmr.jpg "esp8266-dsmr")
 
 ## Requirements 
+* Arduino IDE
 * ESP8266 (Wemos/LOLIN D1 mini/ESP01/NodeMCU)
 * Basic soldering and wiring skills
-* Arduino core for ESP8266 WiFi chip [[link]](https://github.com/esp8266/Arduino)
 * (For Wemos d1 mini) CH340G driver [[link]](https://wiki.wemos.cc/downloads)
-* Arduino IDE
-* Hardware package for arduino [[LINK]](https://github.com/esp8266/Arduino)
 
 ## Library dependencies
 - [PubSubClient](https://pubsubclient.knolleary.net) - MQTT client
-- [WifiManager](https://github.com/esp8266/Arduino) - Wifi client
+- [Arduino core](https://github.com/esp8266/Arduino) - Arduino core for ESP8266 WiFi chip
 
 ## Supported messages
 
