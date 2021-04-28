@@ -1,15 +1,16 @@
 #pragma once
+#include "Logger.h"
 
 extern bool hasWIFI;
 
 class WifiConnector
 {
   private:
-    bool debugMode;
+    Logger logger;
     bool tryingReconnect;
 
   public:
-    WifiConnector(bool inDebugMode = false);
+    WifiConnector();
     void start();
     void handle();
     void reconnect();
