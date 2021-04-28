@@ -12,7 +12,7 @@ MQTTPublisher::MQTTPublisher(String clientId)
   logger.debug("ClientId:" + _clientId);
 }
 
-MQTTPublisher::~MQTTPublisher()
+MQTTPublisher::~MQTTPublisher() 
 {
   client.publish(getTopic("status").c_str(), "offline");
   client.disconnect();
@@ -20,7 +20,14 @@ MQTTPublisher::~MQTTPublisher()
 
 String MQTTPublisher::getTopic(String name)
 {
-  return String(MQTT_PREFIX) + '/' + _clientId + '/' + name;
+  if (USE_CLIENT_ID)
+  {
+    return String(MQTT_PREFIX) + '/' + _clientId + '/' + name;
+  }
+  else
+  {
+    return String(MQTT_PREFIX) + '/' + name;
+  }
 }
 
 bool MQTTPublisher::reconnect()

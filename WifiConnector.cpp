@@ -22,13 +22,14 @@ void WifiConnector::start()
   // Setup Wifi
   WiFi.mode(WIFI_STA);
   WiFi.hostname(WIFI_HOSTNAME);
-  WiFi.begin(WIFI_SSID, WIFI_PASSWORD);   
+  WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
 
   // This funtion is called from main setup function,
   // Wait until unit has wifi before continuing
-  while (WiFi.status() != WL_CONNECTED) {
-      delay(500);
-      logger.debug(".");
+  while (WiFi.status() != WL_CONNECTED)
+  {
+    delay(500);
+    logger.debug(".");
   }
 
   // Set wifi bool
@@ -43,30 +44,31 @@ void WifiConnector::reconnect()
 {
 
   logger.debug("Try to reconnect!");
-  
-  // First hit, try to reconnect. 
-  if(!tryingReconnect)
+
+  // First hit, try to reconnect.
+  if (!tryingReconnect)
   {
     WiFi.reconnect();
     tryingReconnect = true;
   }
-
 }
 
 // handle function called from main loop
 void WifiConnector::handle()
 {
-    
+
   // Check if WIfi is Connected
-  if(!WiFi.isConnected() && !tryingReconnect){
-        
+  if (!WiFi.isConnected() && !tryingReconnect)
+  {
+
     logger.info("Disconnected!");
 
     // Set bool false and try to reconnect
     hasWIFI = false;
     reconnect();
- 
-  }else if (WiFi.isConnected() && !hasWIFI){ // Wifi is Reconnected
+  }
+  else if (WiFi.isConnected() && !hasWIFI)
+  { // Wifi is Reconnected
 
     logger.info("Reconnected!");
 
