@@ -5,6 +5,7 @@
 #include <vector>
 #include "PubSubClient.h"
 #include "WiFiClient.h"
+#include "Logger.h"
 
 #define RECONNECT_TIMEOUT 15000
 
@@ -14,20 +15,23 @@ extern bool hasWIFI;
 class MQTTPublisher
 {
   private:
-    bool debugMode;
+    Logger logger;
+    bool _debugMode;
+    String _clientId;
     bool isStarted;
 
     uint32_t lastConnectionAttempt = 0; // last reconnect
     uint32_t lastUpdateMqtt; // last data send
    
     bool reconnect();
+    String getTopic(String name);
   public:
-    MQTTPublisher(bool inDebugMode = false);
+    MQTTPublisher(String clientId = String(ESP.getChipId(), HEX));
     ~MQTTPublisher();
 
     void start();
     void stop();
 
     void handle();
-    bool publishOnMQTT(String prepend, String topic, String value);
+    bool publishOnMQTT(String topic, String msg);
 };

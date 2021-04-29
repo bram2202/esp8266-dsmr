@@ -7,9 +7,9 @@
 #include "ESP8266mDNS.h"
 
 // Create Wifi Connector
-WifiConnector::WifiConnector(bool inDebugMode)
+WifiConnector::WifiConnector()
 {
-  debugMode = inDebugMode;
+  logger = Logger("WifiConnector");
   tryingReconnect = false;
 }
 
@@ -17,77 +17,62 @@ WifiConnector::WifiConnector(bool inDebugMode)
 void WifiConnector::start()
 {
 
-  if (debugMode){ 
-    Serial.println("Wifi) Start ");
-  }
+  logger.info("Start");
 
   // Setup Wifi
   WiFi.mode(WIFI_STA);
   WiFi.hostname(WIFI_HOSTNAME);
-  WiFi.begin(WIFI_SSID, WIFI_PASSWORD);   
+  WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
 
   // This funtion is called from main setup function,
   // Wait until unit has wifi before continuing
-  while (WiFi.status() != WL_CONNECTED) {
-      delay(500);
-      if (debugMode){
-        Serial.print(".");
-      }
+  while (WiFi.status() != WL_CONNECTED)
+  {
+    delay(500);
+    logger.debug(".");
   }
 
   // Set wifi bool
   hasWIFI = true;
 
-  if (debugMode)
-  {
-    Serial.println("Wifi) Connected!");
-    Serial.println("Wifi) IP: ");
-    Serial.println(WiFi.localIP());
-  }
-
+  logger.info("Connected!");
+  logger.debug("IP: " + WiFi.localIP());
 }
 
 // If wifi connection is lost, try to reconnect
 void WifiConnector::reconnect()
 {
 
-  if (debugMode){
-    Serial.println("Wifi) Try to reconnect!");
-  }
-  
-  // First hit, try to reconnect. 
-  if(!tryingReconnect)
+  logger.debug("Try to reconnect!");
+
+  // First hit, try to reconnect.
+  if (!tryingReconnect)
   {
     WiFi.reconnect();
     tryingReconnect = true;
   }
-
 }
 
 // handle function called from main loop
 void WifiConnector::handle()
 {
-    
+
   // Check if WIfi is Connected
-  if(!WiFi.isConnected() && !tryingReconnect){
-        
-    if (debugMode){
-      Serial.println("Wifi) Disconnected!");
-    }
+  if (!WiFi.isConnected() && !tryingReconnect)
+  {
+
+    logger.info("Disconnected!");
 
     // Set bool false and try to reconnect
     hasWIFI = false;
     reconnect();
- 
-  }else if (WiFi.isConnected() && !hasWIFI){ // Wifi is Reconnected
+  }
+  else if (WiFi.isConnected() && !hasWIFI)
+  { // Wifi is Reconnected
 
-    if (debugMode){
-      Serial.println("Wifi) Reconnected!");
-    }
+    logger.info("Reconnected!");
 
     hasWIFI = true;
     tryingReconnect = false;
-
   }
-        
 }
