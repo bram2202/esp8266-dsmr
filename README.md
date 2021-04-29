@@ -1,23 +1,20 @@
 # esp8266-dsmr
 
-A ESP8266 based DSMR reader, posting onto MQTT, powered directly from the meter itself, no external power supply needed..
-
-All units (except power tariff and version) are rounded to 3 decimals.
+A ESP8266 based DSMR reader, posting onto MQTT, powered directly from the meter itself, no external power supply needed.
 
 The code should work on DSRM v2.2 and higher, only tested on V4.2.
 
 ![esp8266-dsmr](https://github.com/bram2202/esp8266-dsmr/blob/master/docs/esp8266-dsmr.jpg "esp8266-dsmr")
 
 ## Requirements 
-* ESP8266 (Wemos/LOLIN D1 mini/ESP01/NodeMCU)
+* Arduino IDE / VS code
+* ESP8266 board (Wemos/LOLIN D1 mini/ESP01/NodeMCU)
 * Basic soldering and wiring skills
 * (For Wemos d1 mini) CH340G driver [[link]](https://wiki.wemos.cc/downloads)
-* Arduino IDE
-* Hardware package for arduino [[LINK]](https://github.com/esp8266/Arduino)
 
 ## Library dependencies
 - [PubSubClient](https://pubsubclient.knolleary.net) - MQTT client
-- [WifiManager](https://github.com/esp8266/Arduino) - Wifi client
+- [Core for ESP8266](https://github.com/esp8266/Arduino) - Arduino core for ESP8266 WiFi chip
 
 ## Supported messages
 
@@ -37,32 +34,32 @@ The code should work on DSRM v2.2 and higher, only tested on V4.2.
 | total production low | kWh | 1-0:2.8.1 | <MQTT_TOPIC>/power/total_production_low |
 | total production high | kWh | 1-0:2.8.2 | <MQTT_TOPIC>/power/total_production_high |
 | power tariff | 1 = low, 2 = high | 0-0:96.14.0 | <MQTT_TOPIC>/power/power_tariff |
-| short power outages | - | 0-0:96.7.21 |<MQTT_TOPIC/>/power/short_power_outages |
-| long power outages | - | 0-0:96.7.9 |<MQTT_TOPIC/>/power/long_power_outages |
-| instant current phase 1 | A | 1-0:31.7.0 |<MQTT_TOPIC/>/power/phase_1/current |
-| instant current phase 2 | A | 1-0:51.7.0 |<MQTT_TOPIC/>/power/phase_2/current |
-| instant current phase 3 | A | 1-0:71.7.0 |<MQTT_TOPIC/>/power/phase_3/current |
-| instant usage phase 1 | kW | 1-0:21.7.0 |<MQTT_TOPIC/>/power/phase_1/usage |
-| instant usage phase 2 | kW | 1-0:41.7.0 |<MQTT_TOPIC/>/power/phase_2/usage |
-| instant usage phase 3 | kW | 1-0:61.7.0 |<MQTT_TOPIC/>/power/phase_3/usage |
-| instant delivery phase 1 | kW | 1-0:22.7.0 |<MQTT_TOPIC/>/power/phase_1/delivery |
-| instant delivery phase 2 | kW | 1-0:42.7.0 |<MQTT_TOPIC/>/power/phase_2/delivery |
-| instant delivery phase 3 | kW | 1-0:62.7.0 |<MQTT_TOPIC/>/power/phase_3/delivery |
-| short drops phase 1 | - | 1-0:32.32.0 | <MQTT_TOPIC/>/power/phase_1/drops |
-| short drops phase 2 | - | 1-0:52.32.0 | <MQTT_TOPIC/>/power/phase_2/drops |
-| short drops phase 3 | - | 1-0:72.32.0 | <MQTT_TOPIC/>/power/phase_3/drops |
-| short peaks phase 1 | - | 1-0:32.36.0 | <MQTT_TOPIC/>/power/phase_1/peaks |
-| short peaks phase 2 | - | 1-0:52.36.0 | <MQTT_TOPIC/>/power/phase_2/peaks |
-| short peaks phase 3 | - | 1-0:72.36.0 | <MQTT_TOPIC/>/power/phase_3/peaks |
-| timestamp| - | 0-0:1.0.0 | <MQTT_TOPIC/>/power/timestamp |
-| device id | - | 0-0:96.1.1 | <MQTT_TOPIC/>/power/device |
+| short power outages | - | 0-0:96.7.21 |<MQTT_TOPIC>/power/short_power_outages |
+| long power outages | - | 0-0:96.7.9 |<MQTT_TOPIC>/power/long_power_outages |
+| instant current phase 1 | A | 1-0:31.7.0 |<MQTT_TOPIC>/power/phase_1/current |
+| instant current phase 2 | A | 1-0:51.7.0 |<MQTT_TOPIC>/power/phase_2/current |
+| instant current phase 3 | A | 1-0:71.7.0 |<MQTT_TOPIC>/power/phase_3/current |
+| instant usage phase 1 | kW | 1-0:21.7.0 |<MQTT_TOPIC>/power/phase_1/usage |
+| instant usage phase 2 | kW | 1-0:41.7.0 |<MQTT_TOPIC>/power/phase_2/usage |
+| instant usage phase 3 | kW | 1-0:61.7.0 |<MQTT_TOPIC>/power/phase_3/usage |
+| instant delivery phase 1 | kW | 1-0:22.7.0 |<MQTT_TOPIC>/power/phase_1/delivery |
+| instant delivery phase 2 | kW | 1-0:42.7.0 |<MQTT_TOPIC>/power/phase_2/delivery |
+| instant delivery phase 3 | kW | 1-0:62.7.0 |<MQTT_TOPIC>/power/phase_3/delivery |
+| short drops phase 1 | - | 1-0:32.32.0 | <MQTT_TOPIC>/power/phase_1/drops |
+| short drops phase 2 | - | 1-0:52.32.0 | <MQTT_TOPIC>/power/phase_2/drops |
+| short drops phase 3 | - | 1-0:72.32.0 | <MQTT_TOPIC>/power/phase_3/drops |
+| short peaks phase 1 | - | 1-0:32.36.0 | <MQTT_TOPIC>/power/phase_1/peaks |
+| short peaks phase 2 | - | 1-0:52.36.0 | <MQTT_TOPIC>/power/phase_2/peaks |
+| short peaks phase 3 | - | 1-0:72.36.0 | <MQTT_TOPIC>/power/phase_3/peaks |
+| timestamp| - | 0-0:1.0.0 | <MQTT_TOPIC>/power/timestamp |
+| device id | - | 0-0:96.1.1 | <MQTT_TOPIC>/power/device |
 
 ### Gas
 | Name | unit | DSMR code | MQTT topic |
 |:----  |:-------|:------ |:------|
 | total gas | m3 | 0-1:24.2.1 | <MQTT_TOPIC>/gas/total |
-| timestamp| - | 0-1:24.2.1| <MQTT_TOPIC/>/gas/timestamp |
-| device id | - | 0-1:96.1.0 | <MQTT_TOPIC/>/gas/device |
+| timestamp| - | 0-1:24.2.1| <MQTT_TOPIC>/gas/timestamp |
+| device id | - | 0-1:96.1.0 | <MQTT_TOPIC>/gas/device |
 
 
 ## Settings
