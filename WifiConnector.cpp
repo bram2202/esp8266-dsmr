@@ -36,7 +36,7 @@ void WifiConnector::start()
   hasWIFI = true;
 
   logger.info("Connected!");
-  logger.debug("IP: " + WiFi.localIP());
+  logger.debug("IP: " +  WiFi.localIP().toString());
 }
 
 // If wifi connection is lost, try to reconnect
