@@ -75,17 +75,11 @@ void setup()
   Serial.begin(115200);
   pinMode(rxPin, FUNCTION_0); // RX
 
-  // Level shifter pin
+  logger.info("Start setup");
+
   pinMode(lvlPin, OUTPUT); // D1
-  digitalWrite(lvlPin, LOW); // Turn off level shifter
-
-  // Led pin
-  pinMode(LED_BUILTIN, OUTPUT); // Led pin
-
-  logger.info("Start, Wait 20 sec....");
-  delay(20000); // Wait 20 sec to boot, allow for programmer to flash
-  logger.info("Done, Booting");
-
+  digitalWrite(lvlPin, HIGH); // Turn on RX Trans
+ 
   // Setup Wifi
   wifiConnector = WifiConnector();
   wifiConnector.start();
@@ -97,9 +91,6 @@ void setup()
   // Setup OTA
   ArduinoOTA.setHostname(WIFI_HOSTNAME);
   ArduinoOTA.begin();
-
-  // Turn on level shifter
-  digitalWrite(lvlPin, HIGH);
 
   logger.info("Setup complte");
 }
@@ -117,10 +108,8 @@ void loop()
   // If serial received, read until newline
   if (Serial.available() > 0)
   {
-    digitalWrite(LED_BUILTIN, HIGH);
     incomingString = Serial.readStringUntil('\n');
     handleString(incomingString);
-    digitalWrite(LED_BUILTIN, LOW);
   }
 }
 
