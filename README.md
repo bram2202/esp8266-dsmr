@@ -97,25 +97,25 @@ Create your own with the [Gerber files (zip)](pcb/gerber.zip)
 ## Parts
 | Type | Amount |
 |:---|:---|
-| ESP8266 | 1 |
+| ESP8266 board| 1 |
 | Prototyping board or PCB | 1 |
 | 2.2k resistor (0805) | 2 |
 | 1k resistor (0805) | 1 |
-| BC547 or BC817 (SOT-23) | 1 | 
-| 470uf cap. | 1 | 
+| BC547 or BC817 (SOT-23) | 2 | 
+| 470uf cap. 8x12mm | 1 | 
 
-## RJ11 connection
+## DSMR connection
 
-Connecting to the DSMR with a RJ12 (6p6c) in Port 1 (P1), found on most smart meters.
+Connecting to the DSMR with a RJ11/12/25 (6p6c or 6p4c) cable plugged into the Port 1 (P1), found on all supported smart meters.
 
-| DSRM RJ12 | Description | J1 pin |
+| DSRM P1 | Description | PCB Pin |
 |:---|:---|:---|
-| 1* | +5v | 1 (5v) |
-| 2 | Request | 2 (5v) |
-| 3 | Data GND| 3 (GND) |
+| 1* | +5v | 6 (5v) |
+| 2 | Request | 5 (5v) |
+| 3 | Data GND| 4 (GND) |
 | 4 | N.C. | N.C. |
-| 5 | Data | 5 (Data)|
-| 6* | Power GND | 6 (GND) |
+| 5 | Data | 2 (Data)|
+| 6* | Power GND | 1 (GND) |
 
 `* 1 and 6 are not needed if powered by USB.`
 
