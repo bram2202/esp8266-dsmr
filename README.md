@@ -4,13 +4,15 @@ A ESP8266 based DSMR reader, posting onto MQTT, powered directly from the meter 
 
 The code should work on DSRM v2.2 and higher, only tested on V4.2.
 
-![esp8266-dsmr](https://github.com/bram2202/esp8266-dsmr/blob/master/docs/esp8266-dsmr.jpg "esp8266-dsmr")
+![esp8266-dsmr](https://github.com/bram2202/esp8266-dsmr/blob/master/docs/PCB_IRL.png "esp8266-dsmr")
 
 ## Requirements 
 * Arduino IDE / VS code
 * ESP8266 board (Wemos/LOLIN D1 mini/ESP01/NodeMCU)
 * Basic soldering and wiring skills
 * (For Wemos d1 mini) CH340G driver [[link]](https://wiki.wemos.cc/downloads)
+* Prototype board / breadboard / PCB
+* RJ11/12/25 cable
 
 ## Library dependencies
 - [PubSubClient](https://pubsubclient.knolleary.net) - MQTT client
@@ -61,7 +63,6 @@ The code should work on DSRM v2.2 and higher, only tested on V4.2.
 | timestamp| - | 0-1:24.2.1| <MQTT_TOPIC>/gas/timestamp |
 | device id | - | 0-1:96.1.0 | <MQTT_TOPIC>/gas/device |
 
-
 ## Settings
 Copy `Settings.example.h` to `Settings.h` and fill in the correct data.
 
@@ -81,40 +82,44 @@ Copy `Settings.example.h` to `Settings.h` and fill in the correct data.
 
 
 ## Circuit
-view [scheme.pdf](scheme.pdf).
+View [scheme (pdf)](pcb/schematic.pdf).
 
 Using a level shifter inverter to get the serial output from the meter into the ESP.<br>
-The board is powered directly from the meters power supply.<br>
+The board can be powered directly from the meters power supply <i>(this can vary between models)</i>.
 
-**Flash the firmware before attaching the circuit,** see "know issue"!
 
-### Parts
+## Custom PCB
+Create your own with the [Gerber files (zip)](pcb/gerber.zip)
+
+
+## PCB case
+- TODO
+
+## Parts
 | Type | Amount |
 |:---|:---|
-| ESP8266 | 1 |
-| Prototyping board | 1 |
-| 2.2k resistor | 2 |
-| 1k resistor | 1 |
-| BC547 | 1 | 
-| 470uf cap. | 1 | 
+| ESP8266 board| 1 |
+| Prototyping board or PCB | 1 |
+| 2.2k resistor (0805) | 2 |
+| 1k resistor (0805) | 1 |
+| BC547 or BC817 (SOT-23) | 2 | 
+| 470uf cap. 8x12mm | 1 | 
 
-### RJ11 connection
+## DSMR connection
 
-Connecting to the DSMR witn a RJ11 in Port 1 (P1), found on most smart meters.
+Connecting to the DSMR with a RJ11/12/25 (6p6c or 6p4c) cable plugged into the Port 1 (P1), found on all supported smart meters.
 
-
-| DSRM RJ11 | Description | J1 pin |
+| DSRM P1 | Description | PCB Pin |
 |:---|:---|:---|
-| 1 | +5v | 1 (5v) |
-| 2 | Request | 2 (5v) |
-| 3 | Data GND| 3 (GND) |
+| 1* | +5v | 6 (5v) |
+| 2 | Request | 5 (5v) |
+| 3 | Data GND| 4 (GND) |
 | 4 | N.C. | N.C. |
-| 5 | Data | 5 (Data)|
-| 6 | Power GND | 6 (GND) |
+| 5 | Data | 2 (Data)|
+| 6* | Power GND | 1 (GND) |
 
+`* 1 and 6 are not needed if powered by USB.`
 
 ## Known issues
-- If the level shifter inverter is connected, it's impossible to flash the firmware.<br>
-Pin RX is used, disconnect the pin to flash new firmware.
 - Some DSMR cannot deliver enough power to run the Wemos stably.<br> 
 Connect a 5V usb supply to fix this.
