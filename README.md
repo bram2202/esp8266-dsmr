@@ -82,14 +82,14 @@ Copy `Settings.example.h` to `Settings.h` and fill in the correct data.
 
 
 ## Circuit
-View [scheme (pdf)](pcb/schematic.pdf).
+View [scheme (pdf)](https://github.com/bram2202/esp8266-dsmr/blob/master/PCB/schematic.pdf).
 
 Using a level shifter inverter to get the serial output from the meter into the ESP.<br>
 The board can be powered directly from the meters power supply <i>(this can vary between models)</i>.
 
 
 ## Custom PCB
-Create your own with the [Gerber files (zip)](pcb/gerber.zip)
+Create your own with the [Gerber files (zip)](https://github.com/bram2202/esp8266-dsmr/blob/master/PCB/gerber.zip)
 
 
 ## PCB case
