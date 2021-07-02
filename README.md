@@ -93,7 +93,9 @@ Create your own with the [Gerber files (zip)](https://github.com/bram2202/esp826
 
 
 ## PCB case
-- TODO
+I designed a case to be 3D printed, it fits the board loosely, and is meant to be glued shut
+![esp8266-dsmr](https://github.com/bram2202/esp8266-dsmr/blob/master/docs/case_1.png "esp8266-dsmr case")
+STL files are found in the [STL folder](https://github.com/bram2202/esp8266-dsmr/tree/master/STL)
 
 ## Parts
 | Type | Amount |
