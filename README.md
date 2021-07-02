@@ -4,7 +4,7 @@ A ESP8266 based DSMR reader, posting onto MQTT, powered directly from the meter 
 
 The code should work on DSRM v2.2 and higher, only tested on V4.2.
 
-![esp8266-dsmr](https://github.com/bram2202/esp8266-dsmr/blob/master/docs/PCB_IRL.png "esp8266-dsmr")
+![esp8266-dsmr](/docs/PCB_IRL.png "esp8266-dsmr")
 
 ## Requirements 
 * Arduino IDE / VS code
@@ -94,7 +94,9 @@ Create your own with the [Gerber files (zip)](https://github.com/bram2202/esp826
 
 ## PCB case
 I designed a case to be 3D printed, it fits the board loosely, and is meant to be glued shut
-![esp8266-dsmr](https://github.com/bram2202/esp8266-dsmr/blob/master/docs/case_1.png "esp8266-dsmr case")
+
+![esp8266-dsmr](/docs/case_1.jpg "esp8266-dsmr case")
+
 STL files are found in the [STL folder](https://github.com/bram2202/esp8266-dsmr/tree/master/STL)
 
 ## Parts
