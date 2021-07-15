@@ -124,6 +124,9 @@ Connecting to the DSMR with a RJ11/12/25 (6p6c or 6p4c) cable plugged into the P
 
 `* 1 and 6 are not needed if powered by USB.`
 
-## Known issues
+# Known issues
 - Some DSMR cannot deliver enough power to run the Wemos stably.<br> 
 Connect a 5V usb supply to fix this.
+
+# Missing properties?
+Are you missing a property? don't be afraid to open a [issue](https://github.com/bram2202/esp8266-dsmr/issues), or contribute to this repo yourself!
