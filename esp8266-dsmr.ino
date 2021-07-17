@@ -31,10 +31,10 @@ const Measurement measurements[] = {
   {"power/device_id", "0-0:96.1.1", 11, 45, Measurement::STRING},
   {"power/consuption", "1-0:1.7.0", 10, 16, Measurement::FLOAT},
   {"power/production", "1-0:2.7.0", 10, 16, Measurement::FLOAT},
-  {"power/total_consuption_low", "1-0:1.8.1", 10, 20, Measurement::FLOAT},
-  {"power/total_consuption_high", "1-0:1.8.2", 10, 20, Measurement::FLOAT},
-  {"power/total_production_low", "1-0:2.8.1", 10, 20, Measurement::FLOAT},
-  {"power/total_production_high", "1-0:2.8.2", 10, 20, Measurement::FLOAT},
+  {"power/total_consuption_tariff_1", "1-0:1.8.1", 10, 20, Measurement::FLOAT},
+  {"power/total_consuption_tariff_2", "1-0:1.8.2", 10, 20, Measurement::FLOAT},
+  {"power/total_production_tariff_1", "1-0:2.8.1", 10, 20, Measurement::FLOAT},
+  {"power/total_production_tariff_2", "1-0:2.8.2", 10, 20, Measurement::FLOAT},
   {"power/power_tariff", "0-0:96.14.0", 12, 16, Measurement::INT},
   {"power/short_power_outages", "0-0:96.7.21", 12, 17, Measurement::INT},
   {"power/long_power_outages", "0-0:96.7.9", 11, 16, Measurement::INT},
@@ -92,7 +92,7 @@ void setup()
   ArduinoOTA.setHostname(WIFI_HOSTNAME);
   ArduinoOTA.begin();
 
-  logger.info("Setup complte");
+  logger.info("Setup complete");
 }
 
 void loop()
