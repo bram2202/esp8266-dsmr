@@ -86,7 +86,7 @@ Copy `Settings.example.h` to `Settings.h` and fill in the correct data.
 | WIFI_SSID | - | Wifi name to connect to |
 | WIFI_PASSWORD | - | Wifi password |
 | MQTT_HOST_NAME | - | MQTT broker address |
-| MQTT_PORT | 1833 | MQTT broker port |
+| MQTT_PORT | 1883 | MQTT broker port |
 | MQTT_USER_NAME| - | MQTT user name |
 | MQTT_PASSWORD | - | MQTT password |
 | MQTT_HOSTNAME| ESP-DSMR | MQTT name |
