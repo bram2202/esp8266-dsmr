@@ -22,11 +22,5 @@
 //publish online status name
 #define MQTT_HOSTNAME "ESP-DSMR"
 
-//default MQTT prefix
-#define MQTT_PREFIX "dsmr"
-
-// Use Client ID in MQTT prefix
-#define USE_CLIENT_ID false
-
 //for debugging, print info on serial (DEBUG, INFO, WARN)
 #define LOG_LEVEL INFO
