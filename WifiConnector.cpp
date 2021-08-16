@@ -16,7 +16,6 @@ WifiConnector::WifiConnector()
 // Set params and try to connect
 void WifiConnector::start()
 {
-
   logger.info("Start");
 
   // Setup Wifi

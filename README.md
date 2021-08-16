@@ -7,6 +7,8 @@ Can be powered directly from the meter itself, no external power supply needed*.
 The code should work on DSRM v2.2 and higher, only tested on V4.2.<br/>
 Supports Dutch and Belgian smart meters.<br/>
 
+Can be used with Home Assistant (mqtt auto discover)
+
 ## Board in action
 ![esp8266-dsmr](/docs/PCB_IRL.png "esp8266-dsmr")
 
@@ -22,7 +24,16 @@ Supports Dutch and Belgian smart meters.<br/>
 - [PubSubClient](https://pubsubclient.knolleary.net) - MQTT client
 - [Core for ESP8266](https://github.com/esp8266/Arduino) - Arduino core for ESP8266 WiFi chip
 
+## Home Assistant
+
+If MQTT Discovery is enabled in Home Assistant [INFO](https://www.home-assistant.io/docs/mqtt/discovery/), <br/>
+the majority of the entities are auto-created and can be found on the integration page.<br/>
+Its posible to disale the gas and phase entities in the settings, [See Settings](#Settings).
+
 ## Messages
+
+The `MQTT_TOPIC` consists of "ESP_DSMR_" + ESP chip ID.<br/>
+For example: `ESP_DSMR_C491F3`
 
 ### Info
 | Name | unit | DSMR code | MQTT topic |
@@ -45,12 +56,12 @@ Supports Dutch and Belgian smart meters.<br/>
 | instant current phase 1 | A | 1-0:31.7.0 |<MQTT_TOPIC>/power/phase_1/current |
 | instant current phase 2 | A | 1-0:51.7.0 |<MQTT_TOPIC>/power/phase_2/current |
 | instant current phase 3 | A | 1-0:71.7.0 |<MQTT_TOPIC>/power/phase_3/current |
-| instant usage phase 1 | kW | 1-0:21.7.0 |<MQTT_TOPIC>/power/phase_1/usage |
-| instant usage phase 2 | kW | 1-0:41.7.0 |<MQTT_TOPIC>/power/phase_2/usage |
-| instant usage phase 3 | kW | 1-0:61.7.0 |<MQTT_TOPIC>/power/phase_3/usage |
-| instant delivery phase 1 | kW | 1-0:22.7.0 |<MQTT_TOPIC>/power/phase_1/delivery |
-| instant delivery phase 2 | kW | 1-0:42.7.0 |<MQTT_TOPIC>/power/phase_2/delivery |
-| instant delivery phase 3 | kW | 1-0:62.7.0 |<MQTT_TOPIC>/power/phase_3/delivery |
+| instant consumption phase 1 | kW | 1-0:21.7.0 |<MQTT_TOPIC>/power/phase_1/consumption |
+| instant consumption phase 2 | kW | 1-0:41.7.0 |<MQTT_TOPIC>/power/phase_2/consumption |
+| instant consumption phase 3 | kW | 1-0:61.7.0 |<MQTT_TOPIC>/power/phase_3/consumption |
+| instant production phase 1 | kW | 1-0:22.7.0 |<MQTT_TOPIC>/power/phase_1/production |
+| instant production phase 2 | kW | 1-0:42.7.0 |<MQTT_TOPIC>/power/phase_2/production |
+| instant production phase 3 | kW | 1-0:62.7.0 |<MQTT_TOPIC>/power/phase_3/production |
 | short drops phase 1 | - | 1-0:32.32.0 | <MQTT_TOPIC>/power/phase_1/drops |
 | short drops phase 2 | - | 1-0:52.32.0 | <MQTT_TOPIC>/power/phase_2/drops |
 | short drops phase 3 | - | 1-0:72.32.0 | <MQTT_TOPIC>/power/phase_3/drops |
@@ -81,17 +92,17 @@ The values for the day and night tariffs are different in the Netherlands compar
 Copy `Settings.example.h` to `Settings.h` and fill in the correct data.
 
 | Setting | default | Description|  
-|:------------- |:----- |:-------------:| 
+|:------------- |:----- |:-------------| 
 | WIFI_HOSTNAME | ESP-DSMR | device name on network |
 | WIFI_SSID | - | Wifi name to connect to |
 | WIFI_PASSWORD | - | Wifi password |
 | MQTT_HOST_NAME | - | MQTT broker address |
-| MQTT_PORT | 1833 | MQTT broker port |
+| MQTT_PORT | 1883 | MQTT broker port |
 | MQTT_USER_NAME| - | MQTT user name |
 | MQTT_PASSWORD | - | MQTT password |
 | MQTT_HOSTNAME| ESP-DSMR | MQTT name |
-| MQTT_PREFIX | dsmr | MQTT prefix |
-| USE_CLIENT_ID | FALSE | Use clientId in prefix |
+| AUTOCONFIG_GAS | true | setup gas entity in HA |
+| AUTOCONFIG_POWER_EXTENDED | true | setup all power entities in HA |
 | LOG_LEVEL | INFO | ( DEBUG / INFO / WARN ) |
 
 

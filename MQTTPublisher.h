@@ -17,21 +17,20 @@ class MQTTPublisher
   private:
     Logger logger;
     bool _debugMode;
-    String _clientId;
+    String _identifier;
     bool isStarted;
-
     uint32_t lastConnectionAttempt = 0; // last reconnect
     uint32_t lastUpdateMqtt; // last data send
    
     bool reconnect();
     String getTopic(String name);
+
   public:
-    MQTTPublisher(String clientId = String(ESP.getChipId(), HEX));
-    ~MQTTPublisher();
+    MQTTPublisher(String identifier);
+    MQTTPublisher();
 
     void start();
     void stop();
-
     void handle();
-    bool publishOnMQTT(String topic, String msg);
+    bool publish(String topic, String msg, bool addIdentifier);
 };
