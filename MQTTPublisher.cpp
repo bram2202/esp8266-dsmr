@@ -96,10 +96,7 @@ bool MQTTPublisher::publish(String topic, String msg, bool addIdentifier)
     topic = _identifier + "/" + topic;
   logger.debug("Publish to: " + topic + ": " + msg);
 
-  //int henk = sizeof(msg.c_str());
-  //logger.debug("size : " + String(henk));
-
-  auto retVal = client.publish(topic.c_str(), msg.c_str(), false);
+  auto retVal = client.publish(topic.c_str(), msg.c_str(), true);
 
   yield();
   if (!retVal)

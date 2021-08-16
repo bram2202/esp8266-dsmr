@@ -19,16 +19,15 @@ class MQTTPublisher
     bool _debugMode;
     String _identifier;
     bool isStarted;
-
     uint32_t lastConnectionAttempt = 0; // last reconnect
     uint32_t lastUpdateMqtt; // last data send
    
     bool reconnect();
     String getTopic(String name);
+
   public:
     MQTTPublisher(String identifier);
     MQTTPublisher();
-
 
     void start();
     void stop();
