@@ -1,34 +1,19 @@
 #include "MQTTPublisher.h"
 #include "Settings.h"
 
+#pragma once
+
 WiFiClient espClient;
 PubSubClient client(espClient);
 
-MQTTPublisher::MQTTPublisher(String clientId)
+MQTTPublisher::MQTTPublisher(String identifier)
 {
+  _identifier = identifier;
   randomSeed(micros());
-  _clientId = clientId;
   logger = Logger("MQTTPublisher");
-  logger.debug("ClientId:" + _clientId);
 }
 
-MQTTPublisher::~MQTTPublisher() 
-{
-  client.publish(getTopic("status").c_str(), "offline");
-  client.disconnect();
-}
-
-String MQTTPublisher::getTopic(String name)
-{
-  if (USE_CLIENT_ID)
-  {
-    return String(MQTT_PREFIX) + '/' + _clientId + '/' + name;
-  }
-  else
-  {
-    return String(MQTT_PREFIX) + '/' + name;
-  }
-}
+MQTTPublisher::MQTTPublisher() {}
 
 bool MQTTPublisher::reconnect()
 {
@@ -41,12 +26,12 @@ bool MQTTPublisher::reconnect()
   if (String(MQTT_USER_NAME).length())
   {
     logger.info("Connecting with credientials");
-    clientConnected = client.connect(_clientId.c_str(), MQTT_USER_NAME, MQTT_PASSWORD);
+    clientConnected = client.connect(_identifier.c_str(), MQTT_USER_NAME, MQTT_PASSWORD);
   }
   else
   {
     logger.info("Connecting without credentials");
-    clientConnected = client.connect(_clientId.c_str());
+    clientConnected = client.connect(_identifier.c_str());
   }
 
   if (clientConnected)
@@ -56,8 +41,8 @@ bool MQTTPublisher::reconnect()
     hasMQTT = true;
 
     // Once connected, publish an announcement...
-    client.publish(getTopic("status").c_str(), "online");
 
+    client.publish(String(_identifier + "/status").c_str(), String("online").c_str());
     return true;
   }
   else
@@ -70,6 +55,7 @@ bool MQTTPublisher::reconnect()
 
 void MQTTPublisher::start()
 {
+
   if (String(MQTT_HOST_NAME).length() == 0 || MQTT_PORT == 0)
   {
     logger.warn("disabled. No hostname or port set.");
@@ -79,6 +65,9 @@ void MQTTPublisher::start()
   logger.debug("enabled. Connecting.");
 
   client.setServer(MQTT_HOST_NAME, MQTT_PORT);
+  client.setKeepAlive(10);
+  client.setBufferSize(2048);
+
   reconnect();
   isStarted = true;
 }
@@ -101,11 +90,17 @@ void MQTTPublisher::handle()
   }
 }
 
-bool MQTTPublisher::publishOnMQTT(String topicSuffix, String msg)
+bool MQTTPublisher::publish(String topic, String msg, bool addIdentifier)
 {
-  String topic = getTopic(topicSuffix);
-  logger.debug("Publish to '" + topic + "':" + msg);
-  auto retVal = client.publish(topic.c_str(), msg.c_str());
+  if (addIdentifier)
+    topic = _identifier + "/" + topic;
+  logger.debug("Publish to: " + topic + ": " + msg);
+
+  auto retVal = client.publish(topic.c_str(), msg.c_str(), true);
+
   yield();
+  if (!retVal)
+    logger.debug("!error : " + String(client.state()));
+
   return retVal;
 }
