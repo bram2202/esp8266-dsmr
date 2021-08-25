@@ -96,13 +96,12 @@ Copy `Settings.example.h` to `Settings.h` and fill in the correct data.
 | WIFI_HOSTNAME | ESP-DSMR | device name on network |
 | WIFI_SSID | - | Wifi name to connect to |
 | WIFI_PASSWORD | - | Wifi password |
-| MQTT_HOST_NAME | - | MQTT broker address |
+| MQTT_BROKER | - | MQTT broker address |
 | MQTT_PORT | 1883 | MQTT broker port |
 | MQTT_USER_NAME| - | MQTT user name |
 | MQTT_PASSWORD | - | MQTT password |
-| MQTT_HOSTNAME| ESP-DSMR | MQTT name |
-| AUTOCONFIG_GAS | true | setup gas entity in HA |
-| AUTOCONFIG_POWER_EXTENDED | true | setup all power entities in HA |
+| AUTOCONFIG_GAS | true | Setup gas entity in HA |
+| AUTOCONFIG_POWER_EXTENDED | true | Setup all power entities in HA |
 | LOG_LEVEL | INFO | ( DEBUG / INFO / WARN ) |
 
 
