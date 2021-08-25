@@ -19,7 +19,7 @@ bool MQTTPublisher::reconnect()
 {
   lastConnectionAttempt = millis();
 
-  logger.debug("Attempt connection to server: " + String(MQTT_HOST_NAME));
+  logger.debug("Attempt connection to server: " + String(MQTT_BROKER));
 
   // Attempt to connect
   bool clientConnected;
@@ -56,7 +56,7 @@ bool MQTTPublisher::reconnect()
 void MQTTPublisher::start()
 {
 
-  if (String(MQTT_HOST_NAME).length() == 0 || MQTT_PORT == 0)
+  if (String(MQTT_BROKER).length() == 0 || MQTT_PORT == 0)
   {
     logger.warn("disabled. No hostname or port set.");
     return; //not configured
@@ -64,7 +64,7 @@ void MQTTPublisher::start()
 
   logger.debug("enabled. Connecting.");
 
-  client.setServer(MQTT_HOST_NAME, MQTT_PORT);
+  client.setServer(MQTT_BROKER, MQTT_PORT);
   client.setKeepAlive(10);
   client.setBufferSize(2048);
 
