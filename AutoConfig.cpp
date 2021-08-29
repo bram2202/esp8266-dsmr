@@ -141,7 +141,7 @@ void AutoConfig::SendConfig()
     // power_tariff
     autoconfPayload["device"] = device.as<JsonObject>();
     autoconfPayload["availability_topic"] = _identifier + "/power/power_tariff/status";
-    autoconfPayload["state_topic"] = _identifier + "/power/power_tariff/reset";
+    autoconfPayload["state_topic"] = _identifier + "/power/power_tariff";
     autoconfPayload["name"] = _identifier + "_power_tariff";
     autoconfPayload["unique_id"] = "power_tariff";
     serializeJson(autoconfPayload, mqttPayload);
