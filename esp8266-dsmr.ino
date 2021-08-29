@@ -156,11 +156,12 @@ void handleString(String incomingString)
         break;
       }
 
-      // Check if measurement state is offline, if so publish online state
+      // Check if measurement state is offline, if so publish online state and last reset
       if (!measurement.online)
       {
         measurement.online = true;
         mqttPublisher.publish(measurement.name + "/status", "online", true);
+        mqttPublisher.publish(measurement.name + "/reset", "1970-01-01T00:00:00+00:00", true);
       }
 
       // Publish measurement
