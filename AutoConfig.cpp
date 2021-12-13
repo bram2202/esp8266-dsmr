@@ -1,3 +1,4 @@
+
 #include <ArduinoJson.h>
 #include "MQTTPublisher.h"
 #include "AutoConfig.h"
@@ -387,16 +388,16 @@ void AutoConfig::SendConfig()
     {
         // Gas
         autoconfPayload["device"] = device.as<JsonObject>();
-        autoconfPayload["availability_topic"] = _identifier + "gas/total/status";
-        autoconfPayload["state_topic"] = _identifier + "gas/total";
-        autoconfPayload["last_reset_topic"] = _identifier + "gas/total/reset";
+        autoconfPayload["availability_topic"] = _identifier + "/gas/total/status";
+        autoconfPayload["state_topic"] = _identifier + "/gas/total";
+        autoconfPayload["last_reset_topic"] = _identifier + "/gas/total/reset";
         autoconfPayload["name"] = _identifier + "_total_gas";
-        autoconfPayload["unit_of_measurement"] = "kWh";
-        autoconfPayload["unique_id"] = "gas/total";
+        autoconfPayload["unit_of_measurement"] = "m³";
+        autoconfPayload["unique_id"] = "gas_total";
         autoconfPayload["icon"] = "mdi:counter";
         autoconfPayload["last_reset_value_template"] = "1970-01-01T00:00:00+00:00";
         serializeJson(autoconfPayload, mqttPayload);
-        _mqttPublisher.publish("homeassistant/sensor/" + _identifier + "/gas_total/config", &mqttPayload[0], false);
+        _mqttPublisher.publish("homeassistant/sensor/" + _identifier + "/total_gas/config", &mqttPayload[0], false);
         autoconfPayload.clear();
     }
 }
