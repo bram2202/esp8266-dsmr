@@ -25,5 +25,8 @@
 // Setup all power entities in HA
 #define AUTOCONFIG_POWER_EXTENDED true
 
+// Setup all custom entities in HA
+#define AUTOCONFIG_CUSTOM_POWER_EXTENDED true
+
 //for debugging, print info on serial (DEBUG, INFO, WARN)
 #define LOG_LEVEL INFO
