@@ -32,9 +32,9 @@ typedef struct
 const Measurement measurements[] = {
     {"version", "1-3:0.2.8", 10, 12, false, Measurement::STRING},
     {"power/timestamp", "0-0:1.0.0", 10, 23, false, Measurement::STRING},
-    {"power/device_id", "0-0:96.1.1", 11, 45, false, Measurement::STRING},
-    {"power/consumption", "1-0:1.7.0", 10, 16, false, Measurement::FLOAT},
-    {"power/production", "1-0:2.7.0", 10, 16, false, Measurement::FLOAT},
+    {"power/device_id", "0-0:96.1.1", 11, 26, false, Measurement::STRING},
+    {"power/consumption", "1-0:1.7.0", 10, 20, false, Measurement::FLOAT},
+    {"power/production", "1-0:2.7.0", 10, 20, false, Measurement::FLOAT},
     {"power/total_consumption_tariff_1", "1-0:1.8.1", 10, 20, false, Measurement::FLOAT},
     {"power/total_consumption_tariff_2", "1-0:1.8.2", 10, 20, false, Measurement::FLOAT},
     {"power/total_production_tariff_1", "1-0:2.8.1", 10, 20, false, Measurement::FLOAT},
@@ -57,6 +57,16 @@ const Measurement measurements[] = {
     {"power/phase_1/production", "1-0:22.7.0", 11, 17, false, Measurement::FLOAT},
     {"power/phase_2/production", "1-0:42.7.0", 11, 17, false, Measurement::FLOAT},
     {"power/phase_3/production", "1-0:62.7.0", 11, 17, false, Measurement::FLOAT},
+    {"power/total_consumption", "1-0:1.8.0", 10, 20, false, Measurement::FLOAT},
+    {"power/total_production", "1-0:2.8.0", 10, 20, false, Measurement::FLOAT},
+    {"power/total_reactive_consumption", "1-0:3.8.0", 10, 20, false, Measurement::FLOAT},
+    {"power/total_reactive_production", "1-0:4.8.0", 10, 20, false, Measurement::FLOAT},
+    {"power/phase_1/instantaneous_voltage", "1-0:32.7.0", 11, 16, false, Measurement::FLOAT},
+    {"power/phase_2/instantaneous_voltage", "1-0:52.7.0", 11, 16, false, Measurement::FLOAT},
+    {"power/phase_3/instantaneous_voltage", "1-0:72.7.0", 11, 16, false, Measurement::FLOAT},
+    {"power/phase_1/instantaneous_current", "1-0:31.7.0", 11, 14, false, Measurement::INT},
+    {"power/phase_2/instantaneous_current", "1-0:51.7.0", 11, 14, false, Measurement::INT},
+    {"power/phase_3/instantaneous_current", "1-0:71.7.0", 11, 14, false, Measurement::INT},
     {"gas/total", "0-1:24.2.1", 26, 35, false, Measurement::FLOAT},
     {"gas/device_id", "0-1:96.1.0", 11, 45, false, Measurement::STRING},
     {"gas/timestamp", "0-1:24.2.1", 11, 24, false, Measurement::STRING}};
@@ -156,12 +166,11 @@ void handleString(String incomingString)
         break;
       }
 
-      // Check if measurement state is offline, if so publish online state and last reset
+      // Check if measurement state is offline, if so publish online state
       if (!measurement.online)
       {
         measurement.online = true;
         mqttPublisher.publish(measurement.name + "/status", "online", true);
-        mqttPublisher.publish(measurement.name + "/reset", "1970-01-01T00:00:00+00:00", true);
       }
 
       // Publish measurement
