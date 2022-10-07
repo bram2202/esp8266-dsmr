@@ -1,3 +1,8 @@
+# PLEASE NOTE, THIS PROJECT IS NO LONGER BEING MAINTAINED
+The same functionality can be achieved with [[EspHome]](https://esphome.io/components/sensor/dsmr.html?highlight=dsmr).<br/>
+The PCB can be used with the correct [[CONFIG]](https://gist.github.com/bram2202/d75b34a9d672cc8032f55d6f79cfb718)
+* * *
+
 # esp8266-dsmr
 
 A ESP8266 based DSMR reader, posting messages onto MQTT.<br/>
